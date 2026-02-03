@@ -82,6 +82,46 @@ Il faut utilisé la formule d'un disque et vérifier si le point est dedans.
 
 ### ⭐ Cercle
 
-On créer un petit cercle et on verifie que les points soient au-dessus
+On créer un petit cercle et on verifie que les points soient au-dessus.
 
 ![Après modification](./output/cercle.png)
+
+### ⭐⭐ Animation
+
+On boucle pour créer 25 images et on créer le gif.
+
+![Après modification](./output/animation.gif)
+
+### ⭐⭐⭐ Rosace
+
+On utilise des formules tigonométrique et on boucle pour créer tous les cercles.
+
+![Après modification](./output/rosace.png)
+
+## ⭐⭐ Mosaïque
+
+On copie l'image 5 fois en décalant x et y par la taille de l'image.
+
+![Avant modification](./images/logo.png)
+![Après modification](./output/mosaique.png)
+
+## ⭐⭐⭐⭐ Mosaïque miroir
+
+Quand le modulo vaut 1, alors on est sur une case impair et on change le comportement.
+
+![Avant modification](./images/logo.png)
+![Après modification](./output/mosaique_miroir.png)
+
+## ⭐⭐⭐ Glitch
+
+Il faut bien penser à prendre une image de référence.
+
+![Avant modification](./images/logo.png)
+![Après modification](./output/glitch.png)
+
+## ⭐⭐⭐ Tri de pixels
+
+On fait le tri en fonction de la brightness de la couleur et il faut bien penser à multiplier l'index aléatoire par y \* la taille de l'image
+
+![Avant modification](./images/logo.png)
+![Après modification](./output/tri_pixel.png)
