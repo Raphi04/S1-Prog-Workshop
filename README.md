@@ -125,3 +125,30 @@ On fait le tri en fonction de la brightness de la couleur et il faut bien penser
 
 ![Avant modification](./images/logo.png)
 ![Après modification](./output/tri_pixel.png)
+
+## ⭐⭐⭐(⭐) Fractale de Mandelbrot
+
+La principale source de problème était de bien penser à diviser par des float et de trouver la formule de conversion des intervalles.
+
+![Après modification](./output/fractale.png)
+
+## ⭐⭐⭐(⭐) Dégradés dans l'espace de couleur Lab
+
+Il faut bien penser à faire le mix une fois qu'on est passé à OkLab, puis repartir sur du srgb.
+
+![Avant modification](./output/bad_color_gradiant.png)
+![Après modification](./output/color_gradiant.png)
+
+## ⭐⭐⭐(⭐) Tramage
+
+Il faut bien pensé à revenir au grayscale vu que l'image est en couleur.
+
+![Avant modification](./images/photo.jpg)
+![Après modification](./output/tramage.png)
+
+## ⭐⭐⭐(⭐) Normalisation de l'histogramme
+
+On récupère le min et le max de la luminosité et on adapte l'intervale à [0, 1].
+
+![Avant modification](./images/photo_faible_contraste.jpg)
+![Après modification](./output/tramage.png)
