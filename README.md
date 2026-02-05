@@ -152,3 +152,36 @@ On récupère le min et le max de la luminosité et on adapte l'intervale à [0,
 
 ![Avant modification](./images/photo_faible_contraste.jpg)
 ![Après modification](./output/tramage.png)
+
+## ⭐⭐⭐⭐ Vortex
+
+Il faut bien penser à faire le vortex sur un fond noir et faire attention aux x et y qui sortent du cadre. Aussi, il faut diviser la distance sinon, le vortex est trop rapide.
+
+J'ai ajouté un fail du vortex qui était jolie.
+
+![Avant modification](./images/logo.png)
+![Après modification](./output/vortex.png)
+![Après modification](./output/vortex_fail.png)
+
+## ⭐⭐⭐⭐ Convolutions
+
+Le plus dur est de déterminer la taille de la matrice est d'appliquer les calculs.
+
+![Avant modification](./images/logo.png)
+![Après modification](./output/convolutions.png)
+
+## ⭐ Netteté, Contours, etc.
+
+Le plus dur est de déterminer la taille de la matrice est d'appliquer les calculs.
+
+![Avant modification](./images/logo.png)
+![Après modification](./output/emboss.png)
+![Après modification](./output/outline.png)
+![Après modification](./output/sharpen.png)
+
+## ⭐⭐ Filtres séparables
+
+On créé un boulean pour d'abords faire en horizontal puis en vertical et on fait une image intermédiaire sinon on efface les premières modifications
+
+![Avant modification](./images/logo.png)
+![Après modification](./output/filtre_separe.png)
