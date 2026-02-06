@@ -608,6 +608,28 @@ glm::vec3 applyKernel3(float kernel[5][5], float x, float y, sil::Image const& i
 
 glm::vec3 applyKernel3(float kernel[5][5], float x, float y, sil::Image const& imageRef, bool isHorizontal);
 
+glm::vec3 applyKernel4(float kernel[3][3], float x, float y, sil::Image const& imageRef, bool isHorizontal){
+    glm::vec3 somme{0};
+
+    if(isHorizontal) {
+        for (int i = -1; i <= 1; i++) {
+            if (x + i >= 0 && x + i < imageRef.width()) {
+                somme += imageRef.pixel(x + i, y) * kernel[i + 1][2];
+            } 
+        }
+    } else {
+        for (int i = -1; i <= 1; i++) {
+            if (y + i >= 0 && y + i < imageRef.height()) {
+                somme += imageRef.pixel(x, y + i) * kernel[2][i + 1];
+            } 
+        }
+    }
+    return somme;
+}
+
+glm::vec3 applyKernel4(float kernel[3][3], float x, float y, sil::Image const& imageRef, bool isHorizontal);
+
+
 // ⭐⭐⭐⭐ Convolutions
 void convolutions(sil::Image& image, float kernel[5][5]) {
     sil::Image imageRef = image;
@@ -668,6 +690,71 @@ void filtre_separe(sil::Image& image, float kernel[5][5]) {
         }
     }
     finalImage.save("output/filtre_separe.png");
+}
+
+// ⭐⭐ Différence de gaussiennes
+void difference_gaussiennes(sil::Image& image) {
+    sil::Image imageRef = image;
+
+    float kernel5[5][5] = {
+        {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
+        {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
+        {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
+        {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
+        {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
+    };
+
+    float kernel3[3][3] = {
+        {1.f/3.f, 1.f/3.f, 1.f/3.f}, 
+        {1.f/3.f, 1.f/3.f, 1.f/3.f}, 
+        {1.f/3.f, 1.f/3.f, 1.f/3.f}, 
+    };
+
+    sil::Image gaus1 = image;
+    sil::Image gaus2 = image;
+
+    sil::Image finalGaus1 = image;
+    sil::Image finalGaus2 = image;
+
+    for (int x{0}; x < image.width(); x++){
+        for (int y{0}; y < image.height(); y++){
+            gaus1.pixel(x, y) = applyKernel3(kernel5, x, y, imageRef, true);
+        }
+    }
+
+    for (int x{0}; x < image.width(); x++){
+        for (int y{0}; y < image.height(); y++){
+            finalGaus1.pixel(x, y) = applyKernel3(kernel5, x, y, gaus1, false);
+        }
+    }
+
+    for (int x{0}; x < image.width(); x++){
+        for (int y{0}; y < image.height(); y++){
+            gaus2.pixel(x, y) = applyKernel4(kernel3, x, y, imageRef, true);
+        }
+    }
+
+    for (int x{0}; x < image.width(); x++){
+        for (int y{0}; y < image.height(); y++){
+            finalGaus2.pixel(x, y) = applyKernel4(kernel3, x, y, gaus2, false);
+        }
+    }
+
+    for (int x{0}; x < image.width(); x++){
+        for (int y{0}; y < image.height(); y++){
+            image.pixel(x ,y) = finalGaus2.pixel(x, y) - finalGaus1.pixel(x, y);
+
+            float grayscale = 0.3 * image.pixel(x ,y).r + 0.59 * image.pixel(x ,y).g + 0.11 * image.pixel(x ,y).b;
+
+            if(grayscale < 0.05) {
+                image.pixel(x ,y) = {0.f, 0.f, 0.f};
+            } else {
+                image.pixel(x ,y) = {1.f, 1.f, 1.f};
+            }
+        }
+    }
+
+    image.save("output/difference_gaussiennes.png");
 }
 
 int main()
@@ -836,14 +923,18 @@ int main()
     // };
     // sharpen(image, kernel);
 
-    // ⭐⭐ Filtres séparables
-    sil::Image image{"images/logo.png"};
-    float kernel[5][5] = {
-        {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
-        {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
-        {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
-        {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
-        {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
-    };
-    filtre_separe(image, kernel);
+    // // ⭐⭐ Filtres séparables
+    // sil::Image image{"images/logo.png"};
+    // float kernel[5][5] = {
+    //     {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
+    //     {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
+    //     {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
+    //     {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
+    //     {1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f, 1.f/5.f}, 
+    // };
+    // filtre_separe(image, kernel);
+
+    // ⭐⭐ Différence de gaussiennes
+    sil::Image image{"images/photo.jpg"};
+    difference_gaussiennes(image);
 }

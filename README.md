@@ -185,3 +185,10 @@ On créé un boulean pour d'abords faire en horizontal puis en vertical et on fa
 
 ![Avant modification](./images/logo.png)
 ![Après modification](./output/filtre_separe.png)
+
+## ⭐⭐ Différence de gaussiennes
+
+Il faut y aller à tâtons pour trouver un bon threshold.
+
+![Avant modification](./images/photo.jpg)
+![Après modification](./output/difference_gaussiennes.png)
